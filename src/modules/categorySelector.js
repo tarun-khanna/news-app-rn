@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 
 import Typography from './typography'
@@ -12,17 +12,19 @@ const CategorySelector = ({
   onPress
 }) => {
   return (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={[styles.containerScroll, customStyle]}>
-      {NEWS_CATEGORIES.map(category => (
-        <React.Fragment key={category}>
-          <CustomTouchable onPress={() => onPress(category)}>
-            <Typography customStyle={styles.categoryStyles} color={activeCategory === category ? 'black' : 'pastel_grey'} type="BOLD" size={16}>
-              {category}
-            </Typography>
-          </CustomTouchable>
-        </React.Fragment>
-      ))}
-    </ScrollView>
+    <View style={customStyle}>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={[styles.containerScroll]}>
+        {NEWS_CATEGORIES.map(category => (
+          <React.Fragment key={category}>
+            <CustomTouchable onPress={() => onPress(category)}>
+              <Typography customStyle={styles.categoryStyles} color={activeCategory === category ? 'black' : 'pastel_grey'} type="BOLD" size={16}>
+                {category}
+              </Typography>
+            </CustomTouchable>
+          </React.Fragment>
+        ))}
+      </ScrollView>
+    </View>
   )
 }
 
@@ -37,8 +39,11 @@ const styles = StyleSheet.create({
 
 CategorySelector.propTypes = {
   activeCategory: PropTypes.string,
-  customStyle: PropTypes.object,
-  onPress: PropTypes.func
+  onPress: PropTypes.func,
+  customStyle: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]),
 }
 
 export default CategorySelector;

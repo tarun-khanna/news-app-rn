@@ -35,8 +35,8 @@ const Typography = ({
 
 const styles = StyleSheet.create({
   getTextStyles: ({ color, size }) => ({
-    color: colors[color] || colors.black,
-    fontSize: size || 16
+    color: colors[color],
+    fontSize: size
   }),
   getFamily: (type) => {
     switch (type) {
@@ -62,6 +62,17 @@ const styles = StyleSheet.create({
 
 Typography.propTypes = {
   type: PropTypes.oneOf(Object.keys(TEXT_TYPES)),
+  color: PropTypes.string,
+  size: PropTypes.number,
+  customStyle: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]),
+}
+
+Typography.defaultProps = {
+  color: colors.black,
+  size: 16
 }
 
 export default Typography;

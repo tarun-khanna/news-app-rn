@@ -25,8 +25,6 @@ export const PRIMARY_FONT_HEAVY = 'AvenirNext-Heavy';
 export const PRIMARY_FONT_MEDIUM = 'AvenirNext-Medium';
 export const PRIMARY_FONT_LIGHT = 'AvenirNext-Light';
 
-
-
 export const NEWS_CATEGORIES = [
   'General', 'Entertainment', 'Sports', 'Health', 'Business', 'Technology', 'Science'
 ]

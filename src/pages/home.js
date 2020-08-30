@@ -9,7 +9,6 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import CategorySelector from '../modules/categorySelector';
 import Typography from '../modules/typography';
-
 import HeadlineCard from '../modules/headlineCard';
 import ListCard from '../modules/listCard';
 
@@ -30,7 +29,7 @@ const Home = ({
     setNewsListLoading(true);
     axios({
       method: 'get',
-      url: `https://newsapi.org/v2/top-headlines?country=in&apiKey=43a4e3dac1504d76883768ff0d31879c&category=${category}`
+      url: `https://newsapi.org/v2/top-headlines?country=in&apiKey=${API_TOKEN}&category=${category}`
     })
       .then(res => res.data)
       .then(({ articles }) => { setHeadlines(articles); setHeadlinesLoading(false) })
@@ -38,13 +37,12 @@ const Home = ({
 
     axios({
       method: 'get',
-      url: `https://newsapi.org/v2/everything?apiKey=43a4e3dac1504d76883768ff0d31879c&q=${category}`
+      url: `https://newsapi.org/v2/everything?apiKey=${API_TOKEN}&q=${category}`
     })
       .then(res => res.data)
       .then(({ articles }) => { setNewsList(articles); setNewsListLoading(false) })
       .catch(err => console.log('err=', err));
   }
-
 
   useEffect(() => {
     fireApis(activeCategory.toLowerCase())
@@ -54,46 +52,51 @@ const Home = ({
     navigation.navigate('Details', news);
   }
   return (
-    <ScrollView style={styles.mainContainer}>
+    <>
       <CategorySelector
         customStyle={styles.categoriesWrapper}
         activeCategory={activeCategory}
         onPress={(category) => setActiveCategory(category)}
       />
-      <Typography type="BOLD" color="alizarin" size={24} customStyle={[styles.horizontalPadding, styles.listHeading]}>Headlines</Typography>
-      <ScrollView
-        contentContainerStyle={styles.featuredScroll}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-      >
+      <ScrollView>
+        <Typography type="BOLD" color="alizarin" size={24} customStyle={[styles.horizontalPadding, styles.listHeading]}>Headlines</Typography>
+
         {
           headlinesLoading ? (
             <HeadlineCardPlaceholder />
-          ) : headlines.map((headline, index) => (
-            <HeadlineCard
-              key={headline.title + index}
-              headline={headline}
-              onPress={() => handlePress(headline)}
-            />
-          ))
+          ) : (
+              <ScrollView
+                contentContainerStyle={styles.featuredScroll}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              >
+                {headlines.map((headline, index) => (
+                  <HeadlineCard
+                    key={headline.title + index}
+                    headline={headline}
+                    onPress={() => handlePress(headline)}
+                  />
+                ))}
+              </ScrollView>
+            )
         }
+        <View style={[styles.horizontalPadding, styles.contentContainer]}>
+          <Typography type="BOLD" size={24} customStyle={styles.listHeading}>Top Stories</Typography>
+          {
+            newsListLoading ? (
+              <ListCardPlaceholder />
+            ) : newsList.map((news, index) => (
+              <ListCard
+                key={news.title + index}
+                news={news}
+                onPress={() => handlePress(news)}
+                customStyle={styles.listCard}
+              />
+            ))
+          }
+        </View>
       </ScrollView>
-      <View style={[styles.horizontalPadding, styles.contentContainer]}>
-        <Typography type="BOLD" size={24} customStyle={styles.listHeading}>Top Stories</Typography>
-        {
-          newsListLoading ? (
-            <ListCardPlaceholder />
-          ) : newsList.map((news, index) => (
-            <ListCard
-              key={news.title + index}
-              news={news}
-              onPress={() => handlePress(news)}
-              customStyle={styles.listCard}
-            />
-          ))
-        }
-      </View>
-    </ScrollView>
+    </>
   )
 }
 
@@ -101,9 +104,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   categoriesWrapper: {
-    marginBottom: 16,
-  },
-  mainContainer: {
+    paddingBottom: 12,
     paddingTop: getStatusBarHeight() + 10,
   },
   featuredScroll: {

@@ -1,10 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Platform,
   TouchableOpacity,
   TouchableWithoutFeedback
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
+
+import { colors } from '../utilities/constants';
 
 const CustomTouchable = props => {
   const { children, onPress, rippleColor, useForeground, borderless } = props;
@@ -29,8 +32,14 @@ const CustomTouchable = props => {
 
 export default CustomTouchable;
 
+CustomTouchable.propTypes = {
+  rippleColor: PropTypes.string,
+  useForeground: PropTypes.bool,
+  borderless: PropTypes.bool
+}
+
 CustomTouchable.defaultProps = {
-  rippleColor: '#fff',
+  rippleColor: colors.white,
   useForeground: true,
   borderless: false
 };

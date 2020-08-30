@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 
 import { IMAGE_PLACEHOLDER, SCREEN_WIDTH } from '../utilities/constants'
 import CustomTouchable from './customTouchable';
@@ -28,8 +29,6 @@ const ListCard = ({
   )
 }
 
-export default ListCard
-
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
@@ -42,10 +41,20 @@ const styles = StyleSheet.create({
   cardBody: {
     display: 'flex',
     flex: 1,
-    overflow: 'hidden',
     paddingLeft: 12
   },
   title: {
     marginBottom: 4
   },
 });
+
+ListCard.propTypes = {
+  news: PropTypes.shape({
+    title: PropTypes.string,
+    urlToImage: PropTypes.string,
+    author: PropTypes.string,
+    description: PropTypes.string
+  })
+}
+
+export default ListCard;

@@ -3,7 +3,6 @@ import {
   View,
   ImageBackground,
   Platform,
-  Text,
   StyleSheet,
 } from 'react-native';
 import PropTypes from 'prop-types';
@@ -11,7 +10,8 @@ import PropTypes from 'prop-types';
 import {
   ROOT_HORIZONTAL_PADDING,
   SCREEN_WIDTH,
-  DEFAULT_BACKGROUND_COLOR, IMAGE_PLACEHOLDER
+  DEFAULT_BACKGROUND_COLOR,
+  IMAGE_PLACEHOLDER
 } from '../utilities/constants';
 import Typography from './typography';
 import GradientOverlay from './gradientOverlay';

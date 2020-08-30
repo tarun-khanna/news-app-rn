@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
+import PropTypes from 'prop-types';
 
 import { colors } from '../utilities/constants'
 import Typography from './typography'
@@ -11,8 +12,6 @@ const Badge = ({ title, customStyle }) => {
     </View>
   )
 }
-
-export default Badge
 
 const styles = StyleSheet.create({
   container: {
@@ -27,3 +26,13 @@ const styles = StyleSheet.create({
     letterSpacing: 1.4
   }
 });
+
+Badge.propTypes = {
+  title: PropTypes.string,
+  customStyle: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]),
+}
+
+export default Badge;

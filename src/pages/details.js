@@ -1,16 +1,16 @@
 import React from 'react';
 import {
   View,
-  Text,
   ScrollView,
   StyleSheet,
   ImageBackground, Linking
 } from 'react-native'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+
 import Badge from '../modules/Badge';
 import CustomTouchable from '../modules/customTouchable';
 import Typography from '../modules/typography';
-
-import { ROOT_HORIZONTAL_PADDING, SCREEN_HEIGHT } from '../utilities/constants'
+import { colors, IMAGE_PLACEHOLDER, ROOT_HORIZONTAL_PADDING, SCREEN_HEIGHT } from '../utilities/constants'
 
 const Details = ({ navigation, route }) => {
   const {
@@ -27,12 +27,16 @@ const Details = ({ navigation, route }) => {
 
   return (
     <ScrollView>
-      <ImageBackground style={styles.coverImage} source={{ uri: urlToImage }}>
+      <ImageBackground style={styles.coverImage} source={{ uri: urlToImage || IMAGE_PLACEHOLDER }}>
         {author ? <Badge title="bbc news" customStyle={styles.badgeWrapper} /> : null}
       </ImageBackground>
-      <CustomTouchable style={styles.backBtn} onPress={() => navigation.navigate('Home')}>
-        <Typography size={16} color="white" type="BOLD"> Back</Typography>
-      </CustomTouchable>
+      <View style={styles.backBtnWrapper}>
+        <CustomTouchable customStyle={styles.backBtn} onPress={() => navigation.navigate('Home')}>
+          <View style={styles.backBtn}>
+            <Typography size={16} color="white" type="BOLD">X</Typography>
+          </View>
+        </CustomTouchable>
+      </View>
       <View style={styles.contentContainer}>
         <Typography type="BOLD" size={22} customStyle={styles.title}>
           {title}
@@ -61,12 +65,17 @@ const styles = StyleSheet.create({
     height: 0.3 * SCREEN_HEIGHT,
     position: 'relative',
   },
-  backBtn: {
+  backBtnWrapper: {
     position: 'absolute',
-    top: 20,
-    left: 0,
+    top: getStatusBarHeight(),
+    right: 20,
     zIndex: 100,
-    padding: 20,
+  },
+  backBtn: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    backgroundColor: colors.night_rider,
+    borderRadius: 20
   },
   title: {
     marginBottom: 4,
